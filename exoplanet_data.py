@@ -10,7 +10,7 @@ planets = nasa.query_criteria(table="pscomppars", select="pl_name, pl_rade, pl_m
                               cache=False)
 exoDF = planets.to_pandas()
 scoredict = {}
-parameters = {"Mass": 0, "Radius": 0, "Temp": 0, "Density": 0, "Zone": 0, "4+ Met": 0}
+parameters = {"Mass": 0, "Radius": 0, "Temp": 0, "Density": 0, "Zone": 0, "3+ Points": 0}
 
 for index, row in exoDF.iterrows():
     score = 0
@@ -36,22 +36,17 @@ for index, row in exoDF.iterrows():
         score += 1
         parameters["Radius"] += 1
     if 273 <= temp <= 323: # check if temp is between 0 C and 50 C
-        score += 1
+        score += 2
         parameters["Temp"] += 1
     if 4.5 <= density <= 6: # check if density is rocky planet like
         score += 1
         parameters["Density"] += 1
     if rinner <= orbsmax <= router: # check if planet is within goldilocks zone
-        score += 1
+        score += 3
         parameters["Zone"] += 1
-    if score >= 3:
-        parameters["3+ Met"] += 1
         print(name)
-        print(mass)
-        print(radius)
-        print(temp)
-        print(density)
-        print(f"{rinner} {orbsmax} {router}") 
+    if score >= 3:
+        parameters["3+ Points"] += 1
     scoredict[name] = score
 
 score_series = pd.Series(scoredict)
