@@ -61,4 +61,5 @@ sns.barplot(x=parameter_series.index, y=parameter_series.values, palette="viridi
 plt.title('Times Habitability Conditions Met')
 plt.xlabel('Condition')
 plt.ylabel('Count of Conditions Met')
+plt.tight_layout()
 plt.show()
